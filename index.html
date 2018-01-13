@@ -4,8 +4,33 @@
     <meta charset="UTF-8">
     <title>Document</title>
 </head>
-<body>
-    <p>I am Liqiangxiao</p>
-    <h3>hahah</h3>
-</body>
+<div class="container">
+
+    <body>
+        
+        <div class="container" >
+            <div class="row">
+            {% for post in posts %}
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                        <a href="/post/{{ post.id }}">
+                            <img src="static/first_page.jpg" class="img-responsive" >
+                        </a>
+                        <div class="caption">
+                            <a href="/post/{{post.id}}">
+                                <h4>{{post['title']}}</h4>
+                                <p>{{post['content'][1:30]}}</p>
+                            </a>
+                            <p>
+                                <a href="#" class="btn btn-default" role="button" >Review</a>
+                            </p>
+                        </div>
+                    
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        
+    </body>
 </html>
