@@ -178,6 +178,12 @@ section h2 {
 }
 
 /* ---------- Publications ---------- */
+.pub-group {
+  font-size: 1.05rem;
+  margin: 1.5rem 0 0.25rem;
+  color: var(--text-muted);
+}
+
 .pub-list {
   list-style: none;
   margin: 0;

@@ -37,5 +37,13 @@
 
   <script src="js/theme.js"></script>
   <script src="js/blog.js" data-mode="post"></script>
+  <script>
+    // MathJax for $...$ / $$...$$ in posts; blog.js re-typesets after render.
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] },
+      startup: { typeset: false }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </body>
 </html>

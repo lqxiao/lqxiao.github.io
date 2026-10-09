@@ -79,6 +79,9 @@
             // Strip the first H1 — the page already shows the title.
             md = md.replace(/^#\s.*\n/, '');
             bodyEl.innerHTML = marked.parse(md);
+            if (window.MathJax && MathJax.typesetPromise) {
+              MathJax.typesetPromise([bodyEl]);
+            }
           });
       }).catch(function () {
         bodyEl.innerHTML = '<p>Failed to load this post. <a href="blog.html">Back to all posts</a>.</p>';
