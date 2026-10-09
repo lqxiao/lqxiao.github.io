@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Liqiang Xiao</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">Liqiang Xiao</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#publications">Publications</a>
+        <a href="blog.html" class="active">Blog</a>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">◐</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section>
+      <h2 style="margin-top: 2rem;">All Posts</h2>
+      <div id="post-list" class="post-list"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 Liqiang Xiao · Built with plain HTML, hosted on GitHub Pages</p>
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/blog.js" data-mode="list"></script>
+</body>
+</html>

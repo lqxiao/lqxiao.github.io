@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liqiang Xiao</title>
+  <meta name="description" content="Academic homepage of Liqiang Xiao — research, publications, and blog.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">Liqiang Xiao</a>
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="index.html#publications">Publications</a>
+        <a href="blog.html">Blog</a>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">◐</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- ===================== About ===================== -->
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Liqiang Xiao</h1>
+        <p class="hero-title">Scientist · <span class="placeholder">Your Institution / Company</span></p>
+        <p class="hero-bio">
+          <!-- 把这里换成你的简介 -->
+          I am a scientist working on <span class="placeholder">your research area, e.g. machine
+          learning / natural language processing</span>. My research focuses on
+          <span class="placeholder">topic A</span>, <span class="placeholder">topic B</span>, and
+          <span class="placeholder">topic C</span>. Previously, I received my
+          <span class="placeholder">Ph.D. / M.S.</span> from
+          <span class="placeholder">University Name</span>.
+        </p>
+        <div class="hero-links">
+          <a href="mailto:your@email.com">Email</a>
+          <a href="https://github.com/lqxiao" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>
+          <a href="#" target="_blank" rel="noopener">CV</a>
+          <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="https://avatars.githubusercontent.com/u/19170028?v=4" alt="Portrait of Liqiang Xiao">
+      </div>
+    </section>
+
+    <!-- ===================== News ===================== -->
+    <section id="news">
+      <h2>News</h2>
+      <ul class="news-list">
+        <li><span class="news-date">Oct 2026</span> Website relaunched! 🎉</li>
+        <li><span class="news-date">Sep 2026</span> <span class="placeholder">One paper accepted to Conference XYZ 2026.</span></li>
+        <li><span class="news-date">Jun 2026</span> <span class="placeholder">Started a new position at …</span></li>
+      </ul>
+    </section>
+
+    <!-- ===================== Research Interests ===================== -->
+    <section id="research">
+      <h2>Research Interests</h2>
+      <div class="tags">
+        <span class="tag placeholder">Machine Learning</span>
+        <span class="tag placeholder">Natural Language Processing</span>
+        <span class="tag placeholder">Topic C</span>
+        <span class="tag placeholder">Topic D</span>
+      </div>
+    </section>
+
+    <!-- ===================== Publications ===================== -->
+    <section id="publications">
+      <h2>Publications</h2>
+      <ol class="pub-list">
+        <li class="pub">
+          <div class="pub-title placeholder">Paper Title Goes Here: A Study of Something Interesting</div>
+          <div class="pub-authors"><strong>Liqiang Xiao</strong>, Coauthor One, Coauthor Two</div>
+          <div class="pub-venue">Conference / Journal Name (ABBR), 2026</div>
+          <div class="pub-links">
+            <a href="#">PDF</a>
+            <a href="#">Code</a>
+            <a href="#">BibTeX</a>
+          </div>
+        </li>
+        <li class="pub">
+          <div class="pub-title placeholder">Another Paper Title: Methods and Results</div>
+          <div class="pub-authors">Coauthor One, <strong>Liqiang Xiao</strong>, Coauthor Two</div>
+          <div class="pub-venue">Conference / Journal Name (ABBR), 2025</div>
+          <div class="pub-links">
+            <a href="#">PDF</a>
+            <a href="#">BibTeX</a>
+          </div>
+        </li>
+      </ol>
+      <p class="more-link">Full list on <a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a> →</p>
+    </section>
+
+    <!-- ===================== Recent Posts ===================== -->
+    <section id="recent-posts">
+      <h2>Recent Blog Posts</h2>
+      <div id="recent-posts-list" class="post-list"><!-- filled by js/blog.js --></div>
+      <p class="more-link"><a href="blog.html">All posts →</a></p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 Liqiang Xiao · Built with plain HTML, hosted on GitHub Pages</p>
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/blog.js" data-mode="recent"></script>
+</body>
+</html>
