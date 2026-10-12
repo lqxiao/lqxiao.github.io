@@ -45,5 +45,16 @@
     };
   </script>
   <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script>
+    // Count each blog post separately (default would merge all ?p=... into one path)
+    window.goatcounter = {
+      path: function () {
+        var p = new URLSearchParams(location.search).get('p');
+        return p ? '/post/' + p : location.pathname;
+      }
+    };
+  </script>
+  <script data-goatcounter="https://lqxiao.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
