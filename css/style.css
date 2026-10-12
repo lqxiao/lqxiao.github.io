@@ -166,6 +166,23 @@ section h2 {
   padding-top: 0.1rem;
 }
 
+/* Dateless lists (news/activities without timestamps) */
+.plain-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.plain-list li {
+  padding: 0.3rem 0 0.3rem 1.1rem;
+  position: relative;
+}
+.plain-list li::before {
+  content: "‣";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
 /* ---------- Tags ---------- */
 .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .tag {
