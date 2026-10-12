@@ -66,6 +66,10 @@
           return;
         }
         document.title = meta.title + ' — Liqiang Xiao';
+        var desc = document.querySelector('meta[name="description"]') ||
+          document.head.appendChild(Object.assign(document.createElement('meta'), { name: 'description' }));
+        desc.setAttribute('content', meta.title + ' — a blog post by Liqiang Xiao on ' +
+          ((meta.tags || []).join(', ') || 'machine learning') + '.');
         titleEl.textContent = meta.title;
         metaEl.textContent = fmtDate(meta.date) +
           ((meta.tags && meta.tags.length) ? ' · ' + meta.tags.join(', ') : '');
