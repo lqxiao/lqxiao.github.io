@@ -314,6 +314,50 @@ html[data-theme="dark"] .placeholder {
   background: linear-gradient(transparent 65%, rgba(255, 196, 0, 0.22) 65%);
 }
 
+/* ---------- Fun / interactivity ---------- */
+.typing-line {
+  color: var(--text-muted);
+  font-size: 0.98rem;
+  margin: -0.5rem 0 1rem;
+  min-height: 1.5em;
+}
+#typed-interests { color: var(--accent); font-weight: 600; }
+.typing-line .caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  background: var(--accent);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal.revealed { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+.hero-photo img { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.hero-photo img:hover { transform: scale(1.04) rotate(-1.5deg); box-shadow: 0 8px 28px rgba(0,0,0,0.18); }
+
+.pub { transition: background 0.2s ease, padding-left 0.25s ease; border-radius: 6px; }
+.pub:hover { background: var(--bg-subtle); padding-left: 0.6rem; }
+
+.tag { transition: transform 0.15s ease, background 0.2s ease; }
+.tag:hover { transform: translateY(-2px) scale(1.05); background: var(--accent); color: #fff; cursor: default; }
+
+.post-item { transition: background 0.2s ease, padding-left 0.25s ease; border-radius: 6px; }
+.post-item:hover { background: var(--bg-subtle); padding-left: 0.5rem; }
+
+.confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
 /* ---------- Footer ---------- */
 .footer {
   border-top: 1px solid var(--border);
