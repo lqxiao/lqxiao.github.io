@@ -29,20 +29,7 @@
       typeEl.textContent = 'Recursive Self-Improvement';
     }
 
-    /* ---------- 2. Scroll-reveal sections ---------- */
-    if (!reduced && 'IntersectionObserver' in window) {
-      const io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); }
-        });
-      }, { threshold: 0.08 });
-      document.querySelectorAll('section, .pub, .post-item').forEach(function (el) {
-        el.classList.add('reveal');
-        io.observe(el);
-      });
-    }
-
-    /* ---------- 3. Confetti when clicking the profile photo ---------- */
+    /* ---------- 2. Confetti when clicking the profile photo ---------- */
     const photo = document.querySelector('.hero-photo img');
     if (photo) {
       photo.style.cursor = 'pointer';

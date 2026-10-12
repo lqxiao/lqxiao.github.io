@@ -333,12 +333,6 @@ html[data-theme="dark"] .placeholder {
 }
 @keyframes blink { 50% { opacity: 0; } }
 
-.reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
-.reveal.revealed { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
-}
-
 .hero-photo img { transition: transform 0.25s ease, box-shadow 0.25s ease; }
 .hero-photo img:hover { transform: scale(1.04) rotate(-1.5deg); box-shadow: 0 8px 28px rgba(0,0,0,0.18); }
 
