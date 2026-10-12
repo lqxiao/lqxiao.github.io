@@ -1,0 +1,30 @@
+[
+  {
+    "slug": "llm-safety",
+    "title": "From Lab to Launch: Industrial-Strength LLM Safety",
+    "date": "2025-07-17",
+    "tags": [
+      "LLM",
+      "safety"
+    ]
+  },
+  {
+    "slug": "llm-self-play",
+    "title": "LLM Evolution via Self-Play",
+    "date": "2025-05-29",
+    "tags": [
+      "LLM",
+      "self-play",
+      "RL"
+    ]
+  },
+  {
+    "slug": "llm-hallucination",
+    "title": "A Brief Survey to LLM Hallucination",
+    "date": "2025-01-02",
+    "tags": [
+      "LLM",
+      "hallucination"
+    ]
+  }
+]

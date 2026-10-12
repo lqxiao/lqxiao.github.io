@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post — Liqiang Xiao</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">Liqiang Xiao</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#publications">Publications</a>
+        <a href="blog.html" class="active">Blog</a>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">◐</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <article class="article">
+      <a href="blog.html" class="back-link">← All posts</a>
+      <h1 id="post-title"></h1>
+      <div id="post-meta" class="article-meta"></div>
+      <div id="post-body" class="article-body"></div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 Liqiang Xiao · Built with plain HTML, hosted on GitHub Pages</p>
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/blog.js" data-mode="post"></script>
+  <script>
+    // MathJax for $...$ / $$...$$ in posts; blog.js re-typesets after render.
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] },
+      startup: { typeset: false }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</body>
+</html>

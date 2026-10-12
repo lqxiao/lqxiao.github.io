@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lqxiao.github.io/sitemap.xml
