@@ -1,14 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Deep Thought: minimalist tribute — monolithic head, glowing eyes, the Answer -->
-  <rect width="64" height="64" rx="12" fill="#0f172a"/>
-  <!-- head silhouette: tall rounded monolith -->
-  <path d="M18 54 L18 22 Q18 10 32 10 Q46 10 46 22 L46 54 Z" fill="#1d4ed8"/>
-  <!-- brow ridge -->
-  <path d="M22 26 Q32 22 42 26" stroke="#93c5fd" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <!-- eyes -->
-  <circle cx="26" cy="32" r="3" fill="#fbbf24"/>
-  <circle cx="38" cy="32" r="3" fill="#fbbf24"/>
+  <!-- Deep Thought silhouette tribute (Hitchhiker's Guide): tilted screen, bell base, the Answer -->
+  <rect width="64" height="64" rx="12" fill="#ffb81c"/>
+  <!-- tilted screen head -->
+  <path d="M13 11 Q12 9 14 8.5 L45 4.5 Q47 4.2 47.4 6.5 L49.5 24 Q49.8 26 47.5 26.4 L18.5 30.5 Q16.5 30.8 16 28.5 Z" fill="#141414"/>
+  <!-- neck joint -->
+  <path d="M27 30 L37 28.5 L39.5 35 L25.5 36.5 Z" fill="#141414"/>
+  <!-- bell-shaped base -->
+  <path d="M20 44 Q21 34 32 33.5 Q43 33 44 43 L45 44.5 L19 44.5 Z" fill="#141414"/>
   <!-- the Answer -->
-  <text x="32" y="52" font-family="Georgia, serif" font-size="14" font-weight="bold"
-        fill="#ffffff" text-anchor="middle">42</text>
+  <text x="32" y="60" font-family="Arial Black, Arial, sans-serif" font-size="22" font-weight="900"
+        fill="#141414" text-anchor="middle">42</text>
 </svg>
