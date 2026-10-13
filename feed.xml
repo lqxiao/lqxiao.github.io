@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Liqiang Xiao — Blog</title>
+    <link>https://lqxiao.github.io/blog.html</link>
+    <atom:link href="https://lqxiao.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>Blog posts by Liqiang Xiao on LLM alignment, safety, self-play, and reinforcement learning.</description>
+    <language>en</language>
+    <item>
+      <title>From Lab to Launch: Industrial-Strength LLM Safety</title>
+      <link>https://lqxiao.github.io/post.html?p=llm-safety</link>
+      <guid isPermaLink="true">https://lqxiao.github.io/post.html?p=llm-safety</guid>
+      <pubDate>Thu, 17 Jul 2025 00:00:00 GMT</pubDate>
+      <description>After two years working on LLM safety, I’d like to distill what I’ve learned and look toward the next horizon. I hope this post helps anyone tackling safety in an industrial setting. Although academia and industry share much of the same technical knowledge, their priorities differ:</description>
+    </item>
+    <item>
+      <title>LLM Evolution via Self-Play</title>
+      <link>https://lqxiao.github.io/post.html?p=llm-self-play</link>
+      <guid isPermaLink="true">https://lqxiao.github.io/post.html?p=llm-self-play</guid>
+      <pubDate>Thu, 29 May 2025 00:00:00 GMT</pubDate>
+      <description>Self-play is a kind of self-evolutional method that a large language model (LLM) generates its own prompts and responses in order to improve its performance through interaction with itself. Instead of relying solely on human-generated data, the model plays both roles—questioner and responder—to simu</description>
+    </item>
+    <item>
+      <title>A Brief Survey to LLM Hallucination</title>
+      <link>https://lqxiao.github.io/post.html?p=llm-hallucination</link>
+      <guid isPermaLink="true">https://lqxiao.github.io/post.html?p=llm-hallucination</guid>
+      <pubDate>Thu, 02 Jan 2025 00:00:00 GMT</pubDate>
+      <description>Hallucination is usually defined as model generates nonsensical or unfaithful content.</description>
+    </item>
+  </channel>
+</rss>

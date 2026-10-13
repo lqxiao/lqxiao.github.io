@@ -233,6 +233,33 @@ section h2 {
 
 .more-link { font-size: 0.92rem; margin-top: 0.75rem; }
 
+.bib-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.1rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent);
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.bib-btn:hover { border-color: var(--accent); background: var(--tag-bg); }
+.bib-btn.copied { color: #10b981; border-color: #10b981; }
+.bib-src {
+  width: 100%;
+  margin-top: 0.5rem;
+  font-family: ui-monospace, monospace;
+  font-size: 0.78rem;
+  background: var(--bg-subtle);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.6rem;
+  min-height: 9em;
+}
+
 /* ---------- Blog list ---------- */
 .post-list { display: flex; flex-direction: column; }
 .post-item {
