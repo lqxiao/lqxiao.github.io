@@ -1,14 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Deep Thought silhouette tribute: tilted screen face with eyes and mouth, bell base, the Answer -->
+  <!-- Deep Thought: mouth is a slit running off the left edge of the screen; single eye at its right -->
   <rect width="64" height="64" rx="12" fill="#ffb81c"/>
   <!-- tilted screen head -->
   <path d="M13 11 Q12 9 14 8.5 L45 4.5 Q47 4.2 47.4 6.5 L49.5 24 Q49.8 26 47.5 26.4 L18.5 30.5 Q16.5 30.8 16 28.5 Z" fill="#141414"/>
-  <!-- face: eyes + mouth, cut out in amber, following the screen tilt -->
-  <g transform="rotate(-7.5 31 17)">
-    <circle cx="25" cy="14.5" r="2.6" fill="#ffb81c"/>
-    <circle cx="37" cy="14.5" r="2.6" fill="#ffb81c"/>
-    <path d="M24 22.5 L38 22.5" stroke="#ffb81c" stroke-width="2.4" stroke-linecap="round"/>
-  </g>
+  <!-- mouth: slit from the left edge of the screen, tilted with the head -->
+  <path d="M14.5 19.5 L35 17" stroke="#ffb81c" stroke-width="2.6" stroke-linecap="butt"/>
+  <!-- single eye, to the right of the mouth end -->
+  <circle cx="40" cy="14.5" r="2.8" fill="#ffb81c"/>
   <!-- neck joint -->
   <path d="M27 30 L37 28.5 L39.5 35 L25.5 36.5 Z" fill="#141414"/>
   <!-- bell-shaped base -->
