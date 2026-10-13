@@ -1,18 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Deep Thought: slit mouth low+thin, one eye, two distinct arms bracing the big head -->
+  <!-- Deep Thought after bluecornflowerlin's fan art: huge head, full-width slit mouth,
+       dot eye past its right end, two bent legs bracing, rounded body between -->
   <rect width="64" height="64" rx="12" fill="#ffb81c"/>
-  <!-- tilted screen head -->
-  <path d="M13 11 Q12 9 14 8.5 L45 4.5 Q47 4.2 47.4 6.5 L49.5 24 Q49.8 26 47.5 26.4 L18.5 30.5 Q16.5 30.8 16 28.5 Z" fill="#141414"/>
-  <!-- mouth: thin slit, low on the face, from the left edge -->
-  <path d="M15.5 23.5 L34 21.2" stroke="#ffb81c" stroke-width="1.6" stroke-linecap="butt"/>
-  <!-- single eye -->
-  <circle cx="40" cy="15" r="2.8" fill="#ffb81c"/>
-  <!-- two arms: slanted struts from base up to the head's underside -->
-  <path d="M17 45 L23 30.5 L26.5 29.8 L21.5 45 Z" fill="#141414"/>
-  <path d="M47 44.5 L42 28.5 L38.5 29 L42.5 44.5 Z" fill="#141414"/>
-  <!-- small central base -->
-  <path d="M26 45 Q27 40 32 39.7 Q37 39.4 38 44.7 L38.5 45.3 L25.5 45.3 Z" fill="#141414"/>
+  <!-- huge head: trapezoid, wider at top, slight flare -->
+  <path d="M12 4 L52 4 L49 30 Q48.5 33 44 33.5 L20 33.5 Q15.5 33 15 30 Z" fill="#141414"/>
+  <!-- mouth: long thin slit across the lower face, rising slightly to the right -->
+  <path d="M17 27.5 L42 24.5" stroke="#ffb81c" stroke-width="1.4" stroke-linecap="butt"/>
+  <!-- eye: small dot just past the mouth's right end, slightly above the line -->
+  <circle cx="45.5" cy="22.5" r="1.9" fill="#ffb81c"/>
+  <!-- left bent leg: from under head, elbow out, down to base -->
+  <path d="M22 33 L16 40 L17 46 L20.5 46 L20 41 L26.5 34.5 Z" fill="#141414"/>
+  <!-- right bent leg -->
+  <path d="M42 33 L48 40 L47 46 L43.5 46 L44 41 L37.5 34.5 Z" fill="#141414"/>
+  <!-- rounded body between the legs -->
+  <path d="M24 46 Q24.5 38 32 37.5 Q39.5 38 40 46 Z" fill="#141414"/>
   <!-- the Answer -->
-  <text x="32" y="60" font-family="Arial Black, Arial, sans-serif" font-size="19" font-weight="900"
+  <text x="32" y="60" font-family="Arial Black, Arial, sans-serif" font-size="15" font-weight="900"
         fill="#141414" text-anchor="middle">42</text>
 </svg>
