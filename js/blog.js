@@ -83,6 +83,10 @@
             // Strip the first H1 — the page already shows the title.
             md = md.replace(/^#\s.*\n/, '');
             bodyEl.innerHTML = marked.parse(md);
+            bodyEl.querySelectorAll('img').forEach(function (img) {
+              img.loading = 'lazy';
+              img.decoding = 'async';
+            });
             if (window.MathJax && MathJax.typesetPromise) {
               MathJax.typesetPromise([bodyEl]);
             }

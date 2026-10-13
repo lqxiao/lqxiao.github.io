@@ -29,6 +29,23 @@
       typeEl.textContent = 'Recursive Self-Improvement';
     }
 
+    /* ---------- BibTeX copy buttons ---------- */
+    document.querySelectorAll('.bib-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const src = btn.closest('.pub').querySelector('.bib-src');
+        if (!src) return;
+        navigator.clipboard.writeText(src.value).then(function () {
+          const old = btn.textContent;
+          btn.textContent = 'Copied ✓';
+          btn.classList.add('copied');
+          setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1600);
+        }).catch(function () {
+          // Clipboard API unavailable (e.g. http) — show the entry for manual copy
+          src.hidden = !src.hidden;
+        });
+      });
+    });
+
     /* ---------- 2. Confetti when clicking the profile photo ---------- */
     const photo = document.querySelector('.hero-photo img');
     if (photo) {
