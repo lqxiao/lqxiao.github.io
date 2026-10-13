@@ -6,7 +6,8 @@
     "tags": [
       "LLM",
       "safety"
-    ]
+    ],
+    "excerpt": "After two years working on LLM safety, I’d like to distill what I’ve learned and look toward the next horizon. I hope this post helps anyone tackling safety in an industrial setting. Although academia and industry share …"
   },
   {
     "slug": "llm-self-play",
@@ -16,7 +17,8 @@
       "LLM",
       "self-play",
       "RL"
-    ]
+    ],
+    "excerpt": "Self-play is a kind of self-evolutional method that a large language model (LLM) generates its own prompts and responses in order to improve its performance through interaction with itself. Instead of relying solely on h…"
   },
   {
     "slug": "llm-hallucination",
@@ -25,6 +27,7 @@
     "tags": [
       "LLM",
       "hallucination"
-    ]
+    ],
+    "excerpt": "Hallucination is usually defined as model generates nonsensical or unfaithful content."
   }
 ]

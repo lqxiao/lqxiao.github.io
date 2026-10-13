@@ -30,6 +30,18 @@
     }).join('');
   }
 
+  // PaperMod-style cards: title, excerpt, date footer; whole card clickable
+  function renderCards(posts, container) {
+    container.innerHTML = posts.map(function (p) {
+      return '<article class="post-card">' +
+        '<h3 class="post-card-title">' + p.title + '</h3>' +
+        (p.excerpt ? '<p class="post-card-excerpt">' + p.excerpt + '</p>' : '') +
+        '<footer class="post-card-meta">' + fmtDate(p.date) + ' · Liqiang Xiao</footer>' +
+        '<a class="post-card-link" href="post.html?p=' + encodeURIComponent(p.slug) + '" aria-label="' + p.title + '"></a>' +
+        '</article>';
+    }).join('');
+  }
+
   function loadMarked() {
     return new Promise(function (resolve, reject) {
       if (window.marked) return resolve();
@@ -45,12 +57,12 @@
     if (mode === 'recent') {
       const el = document.getElementById('recent-posts-list');
       if (!el) return;
-      fetchPosts().then(function (posts) { renderList(posts.slice(0, 3), el); });
+      fetchPosts().then(function (posts) { renderCards(posts.slice(0, 4), el); });
 
     } else if (mode === 'list') {
       const el = document.getElementById('post-list');
       if (!el) return;
-      fetchPosts().then(function (posts) { renderList(posts, el); });
+      fetchPosts().then(function (posts) { renderCards(posts, el); });
 
     } else if (mode === 'post') {
       const slug = new URLSearchParams(location.search).get('p');
