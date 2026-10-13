@@ -1,17 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Deep Thought: mouth is a slit running off the left edge of the screen; single eye at its right -->
+  <!-- Deep Thought: slit mouth low+thin, one eye, two distinct arms bracing the big head -->
   <rect width="64" height="64" rx="12" fill="#ffb81c"/>
   <!-- tilted screen head -->
   <path d="M13 11 Q12 9 14 8.5 L45 4.5 Q47 4.2 47.4 6.5 L49.5 24 Q49.8 26 47.5 26.4 L18.5 30.5 Q16.5 30.8 16 28.5 Z" fill="#141414"/>
-  <!-- mouth: slit from the left edge of the screen, tilted with the head -->
-  <path d="M14.5 19.5 L35 17" stroke="#ffb81c" stroke-width="2.6" stroke-linecap="butt"/>
-  <!-- single eye, to the right of the mouth end -->
-  <circle cx="40" cy="14.5" r="2.8" fill="#ffb81c"/>
-  <!-- neck joint -->
-  <path d="M27 30 L37 28.5 L39.5 35 L25.5 36.5 Z" fill="#141414"/>
-  <!-- bell-shaped base -->
-  <path d="M20 44 Q21 34 32 33.5 Q43 33 44 43 L45 44.5 L19 44.5 Z" fill="#141414"/>
+  <!-- mouth: thin slit, low on the face, from the left edge -->
+  <path d="M15.5 23.5 L34 21.2" stroke="#ffb81c" stroke-width="1.6" stroke-linecap="butt"/>
+  <!-- single eye -->
+  <circle cx="40" cy="15" r="2.8" fill="#ffb81c"/>
+  <!-- two arms: slanted struts from base up to the head's underside -->
+  <path d="M17 45 L23 30.5 L26.5 29.8 L21.5 45 Z" fill="#141414"/>
+  <path d="M47 44.5 L42 28.5 L38.5 29 L42.5 44.5 Z" fill="#141414"/>
+  <!-- small central base -->
+  <path d="M26 45 Q27 40 32 39.7 Q37 39.4 38 44.7 L38.5 45.3 L25.5 45.3 Z" fill="#141414"/>
   <!-- the Answer -->
-  <text x="32" y="60" font-family="Arial Black, Arial, sans-serif" font-size="22" font-weight="900"
+  <text x="32" y="60" font-family="Arial Black, Arial, sans-serif" font-size="19" font-weight="900"
         fill="#141414" text-anchor="middle">42</text>
 </svg>
