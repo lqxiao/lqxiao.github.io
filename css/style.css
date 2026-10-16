@@ -105,6 +105,17 @@ a:hover { color: var(--accent-hover); text-decoration: underline; }
 }
 .theme-toggle:hover { color: var(--text); border-color: var(--text-muted); }
 
+/* Small illustrated entrance to the flight experiment, at the far right. */
+.nav-inner:has(.nav-roadster) { gap: 1.25rem; }
+.nav-inner:has(.nav-roadster) .nav-links { margin-left: auto; }
+.nav-roadster { display:flex; flex:none; flex-direction:column; align-items:center; justify-content:center; min-width:104px; min-height:48px; padding:3px 5px 5px; border:1px solid #30343a; border-radius:8px; background:#050608; color:#cbd2da; transition:border-color .2s, background .2s; }
+.nav-roadster img { display:block; width:96px; height:35px; object-fit:contain; transition:transform .2s; }
+.nav-roadster span { font:600 8px/1.2 Inter,sans-serif; letter-spacing:.16em; }
+.nav-roadster:hover { text-decoration:none; color:#fff; background:#101318; border-color:#697481; }
+.nav-roadster:hover img { transform:translateX(-3px); }
+.nav-roadster:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+@media(prefers-reduced-motion:reduce) { .nav-roadster, .nav-roadster img { transition:none; } .nav-roadster:hover img { transform:none; } }
+
 /* ---------- Hero ---------- */
 .hero {
   display: flex;
@@ -438,6 +449,11 @@ html[data-theme="dark"] .placeholder {
 
 /* ---------- Mobile ---------- */
 @media (max-width: 640px) {
+  .nav-inner:has(.nav-roadster) { flex-wrap:wrap; gap:.5rem 1rem; }
+  .nav-inner:has(.nav-roadster) .nav-brand { flex:1; }
+  .nav-inner:has(.nav-roadster) .nav-links { order:3; width:100%; margin:0; justify-content:space-between; gap:.5rem; }
+  .nav-roadster { min-width:92px; }
+  .nav-roadster img { width:84px; height:31px; }
   .hero {
     flex-direction: column-reverse;
     align-items: center;

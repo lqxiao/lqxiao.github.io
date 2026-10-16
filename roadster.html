@@ -2,382 +2,62 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Roadster Hover — Liqiang Xiao</title>
-  <meta name="description" content="A tiny web game: fly the new Tesla Roadster with cold-gas thrusters.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roadster · Flight</title>
+  <meta name="description" content="A three-dimensional interpretation of the Roadster ramp flight.">
   <meta name="robots" content="noindex">
   <link rel="icon" href="favicon.svg?v=8" type="image/svg+xml">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0b0e14;
-      --text: #e6e9ee;
-      --muted: #9aa3b0;
-      --accent: #7aa2ff;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Inter", -apple-system, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .top {
-      width: 100%;
-      max-width: 900px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.8rem 1rem;
-    }
-    .top a { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
-    .top a:hover { color: var(--text); }
-    .top h1 { font-size: 1rem; margin: 0; font-weight: 600; }
-    #wrap { position: relative; width: 100%; max-width: 900px; padding: 0 1rem 1.5rem; }
-    canvas {
-      width: 100%;
-      display: block;
-      border-radius: 12px;
-      background: linear-gradient(#0b0e14 0%, #141a2a 55%, #1a1410 56%, #0e0c0a 100%);
-      touch-action: none;
-    }
-    .hint { color: var(--muted); font-size: 0.85rem; text-align: center; margin-top: 0.7rem; }
-    .hint kbd {
-      background: #1a1f2b; border: 1px solid #2a2f3a; border-radius: 4px;
-      padding: 0.05em 0.45em; font-family: inherit; font-size: 0.85em;
-    }
-  </style>
+  <link rel="stylesheet" href="css/roadster.css?v=12">
 </head>
 <body>
-  <div class="top">
-    <h1>🚗 Roadster Hover</h1>
-    <a href="index.html">← back to homepage</a>
-  </div>
-  <div id="wrap">
-    <canvas id="game" width="900" height="420"></canvas>
-    <p class="hint">
-      Hold <kbd>Space</kbd> / <kbd>↑</kbd> / touch to fire the cold-gas thrusters · dodge traffic · fly through rings ·
-      thrusters refuel on the ground
-    </p>
-  </div>
-
-<script>
-(function () {
-  'use strict';
-  const cv = document.getElementById('game');
-  const cx = cv.getContext('2d');
-  const W = cv.width, H = cv.height;
-  const GROUND = H - 70;          // road surface y
-  const G = 1350;                 // gravity px/s^2
-  const THRUST = 2600;            // thruster accel px/s^2
-  const FUEL_MAX = 1.6;           // seconds of continuous thrust
-  const FUEL_REGEN = 1.1;         // refills per second on ground
-
-  // ---------- state ----------
-  let state = 'title';            // title | play | over
-  let t = 0, last = 0;
-  let speed, dist, best = +(localStorage.getItem('roadsterBest') || 0);
-  let car, obstacles, rings, parts, stars, nextObs, nextRing, rngFlash;
-
-  function reset() {
-    speed = 340;
-    dist = 0;
-    car = { x: 160, y: GROUND, vy: 0, fuel: FUEL_MAX, air: false, tilt: 0 };
-    obstacles = []; rings = []; parts = [];
-    nextObs = 1.2; nextRing = 3.5; rngFlash = 0;
-  }
-
-  stars = Array.from({ length: 70 }, () => ({
-    x: Math.random() * W, y: Math.random() * (GROUND - 140), s: Math.random() * 1.4 + 0.4
-  }));
-
-  // ---------- input ----------
-  let thrustOn = false;
-  function press(on) {
-    if (on && state !== 'play') { if (state === 'over' && t < 0.5) return; reset(); state = 'play'; t = 0; }
-    thrustOn = on;
-  }
-  addEventListener('keydown', e => {
-    if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); press(true); }
-  });
-  addEventListener('keyup', e => {
-    if (e.code === 'Space' || e.code === 'ArrowUp') press(false);
-  });
-  cv.addEventListener('pointerdown', e => { e.preventDefault(); press(true); });
-  addEventListener('pointerup', () => press(false));
-
-  // ---------- spawning ----------
-  function spawnObstacle() {
-    const kind = Math.random();
-    if (kind < 0.55) {            // sedan
-      obstacles.push({ x: W + 60, w: 86, h: 34, y: GROUND, type: 'car',
-        hue: 180 + Math.random() * 140 });
-    } else if (kind < 0.85) {     // truck
-      obstacles.push({ x: W + 60, w: 130, h: 62, y: GROUND, type: 'truck',
-        hue: 20 + Math.random() * 40 });
-    } else {                      // overhead sign — forces you to stay LOW
-      obstacles.push({ x: W + 60, w: 110, h: 46, y: GROUND - 150, type: 'sign' });
-    }
-  }
-  function spawnRing() {
-    rings.push({ x: W + 80, y: GROUND - 130 - Math.random() * 140, r: 34, hit: false });
-  }
-
-  // ---------- particles ----------
-  function puff(x, y, n, col, up) {
-    for (let i = 0; i < n; i++) {
-      parts.push({
-        x: x + (Math.random() - 0.5) * 10, y: y + (Math.random() - 0.5) * 6,
-        vx: -speed * 0.3 + (Math.random() - 0.5) * 80,
-        vy: up ? 60 + Math.random() * 120 : -(20 + Math.random() * 60),
-        life: 0.5 + Math.random() * 0.4, age: 0, col: col, s: 2 + Math.random() * 3.5
-      });
-    }
-  }
-
-  // ---------- update ----------
-  function update(dt) {
-    t += dt;
-    if (state !== 'play') return;
-
-    speed += dt * 7;                       // slowly ramp difficulty
-    dist += speed * dt / 10;
-
-    // car physics
-    if (thrustOn && car.fuel > 0) {
-      car.vy -= THRUST * dt;
-      car.fuel = Math.max(0, car.fuel - dt);
-      puff(car.x - 20, car.y - 6, 3, 'flame', true);
-    }
-    car.vy += G * dt;
-    car.y += car.vy * dt;
-    if (car.y >= GROUND) {
-      if (car.air && car.vy > 250) puff(car.x, GROUND, 10, 'dust', false);
-      car.y = GROUND; car.vy = 0; car.air = false;
-      car.fuel = Math.min(FUEL_MAX, car.fuel + FUEL_REGEN * dt);
-    } else car.air = true;
-    if (car.y < 40) { car.y = 40; car.vy = Math.max(car.vy, 0); }
-    car.tilt += ((car.air ? Math.max(-0.3, Math.min(0.35, car.vy / 900)) : 0) - car.tilt) * 10 * dt;
-
-    // spawn
-    nextObs -= dt;
-    if (nextObs <= 0) { spawnObstacle(); nextObs = 0.9 + Math.random() * 1.3 - Math.min(0.5, dist / 4000); }
-    nextRing -= dt;
-    if (nextRing <= 0) { spawnRing(); nextRing = 2.5 + Math.random() * 3; }
-
-    // move world
-    obstacles.forEach(o => o.x -= speed * dt);
-    rings.forEach(r => r.x -= speed * dt);
-    obstacles = obstacles.filter(o => o.x > -200);
-    rings = rings.filter(r => r.x > -100);
-
-    // collisions (forgiving hitbox)
-    const cw = 74, ch = 26, cxm = car.x - cw / 2, cym = car.y - ch;
-    for (const o of obstacles) {
-      const ox = o.x - o.w / 2, oy = o.type === 'sign' ? o.y - o.h : o.y - o.h;
-      if (cxm + 8 < ox + o.w && cxm + cw - 8 > ox && cym + 4 < oy + o.h && cym + ch - 4 > oy) {
-        state = 'over'; t = 0;
-        best = Math.max(best, Math.floor(dist));
-        localStorage.setItem('roadsterBest', best);
-        puff(car.x, car.y - 15, 26, 'flame', true);
-        puff(car.x, car.y - 15, 26, 'dust', false);
-      }
-    }
-    for (const r of rings) {
-      if (!r.hit && Math.abs(r.x - car.x) < 20 && Math.abs(r.y - (car.y - 14)) < r.r - 6) {
-        r.hit = true; dist += 150; rngFlash = 0.6;
-        puff(r.x, r.y, 14, 'spark', false);
-      }
-    }
-    rngFlash = Math.max(0, rngFlash - dt);
-
-    // particles
-    parts.forEach(p => { p.age += dt; p.x += p.vx * dt; p.y += p.vy * dt; });
-    parts = parts.filter(p => p.age < p.life);
-  }
-
-  // ---------- draw ----------
-  function roundRect(x, y, w, h, r) {
-    cx.beginPath();
-    cx.moveTo(x + r, y); cx.arcTo(x + w, y, x + w, y + h, r);
-    cx.arcTo(x + w, y + h, x, y + h, r); cx.arcTo(x, y + h, x, y, r);
-    cx.arcTo(x, y, x + w, y, r); cx.closePath();
-  }
-
-  function drawCar(x, y, tilt) {
-    cx.save();
-    cx.translate(x, y);
-    cx.rotate(tilt);
-    // shadow handled outside; body:
-    const g = cx.createLinearGradient(-40, -30, 40, 0);
-    g.addColorStop(0, '#c8102e'); g.addColorStop(1, '#8c0a20');
-    cx.fillStyle = g;
-    cx.beginPath();                       // sleek roadster silhouette
-    cx.moveTo(-42, -8);
-    cx.quadraticCurveTo(-44, -18, -30, -20);
-    cx.lineTo(-12, -22);
-    cx.quadraticCurveTo(2, -34, 20, -32); // cabin
-    cx.quadraticCurveTo(34, -30, 40, -20);
-    cx.quadraticCurveTo(46, -14, 44, -8);
-    cx.quadraticCurveTo(0, -2, -42, -8);
-    cx.closePath(); cx.fill();
-    // glass
-    cx.fillStyle = 'rgba(140,190,255,0.75)';
-    cx.beginPath();
-    cx.moveTo(-8, -22); cx.quadraticCurveTo(3, -31, 18, -29);
-    cx.quadraticCurveTo(26, -28, 29, -22); cx.closePath(); cx.fill();
-    // glow strip
-    cx.strokeStyle = 'rgba(122,162,255,0.9)'; cx.lineWidth = 1.6;
-    cx.beginPath(); cx.moveTo(-40, -10); cx.quadraticCurveTo(0, -5, 42, -11); cx.stroke();
-    // wheels (tucked when airborne)
-    const wy = car.air ? -4 : 0;
-    cx.fillStyle = '#15181f';
-    cx.beginPath(); cx.arc(-24, wy, 9, 0, 7); cx.fill();
-    cx.beginPath(); cx.arc(26, wy, 9, 0, 7); cx.fill();
-    cx.fillStyle = '#39404f';
-    cx.beginPath(); cx.arc(-24, wy, 4, 0, 7); cx.fill();
-    cx.beginPath(); cx.arc(26, wy, 4, 0, 7); cx.fill();
-    // thruster nozzles
-    cx.fillStyle = '#2a2f3a';
-    cx.fillRect(-46, -14, 7, 8);
-    cx.restore();
-  }
-
-  function draw() {
-    cx.clearRect(0, 0, W, H);
-
-    // stars + moon
-    cx.fillStyle = '#9fb2d8';
-    stars.forEach(s => cx.fillRect(s.x, s.y, s.s, s.s));
-    cx.fillStyle = '#e8edf7';
-    cx.beginPath(); cx.arc(W - 90, 70, 26, 0, 7); cx.fill();
-    cx.fillStyle = '#0b0e14';
-    cx.beginPath(); cx.arc(W - 100, 62, 24, 0, 7); cx.fill();
-
-    // skyline
-    cx.fillStyle = '#121724';
-    for (let i = 0; i < 12; i++) {
-      const bx = ((i * 97 - (dist * 1.2) % 97) + W) % (W + 100) - 50;
-      cx.fillRect(bx, GROUND - 90 - (i % 4) * 26, 46, 90 + (i % 4) * 26);
-    }
-
-    // road
-    cx.fillStyle = '#1c1712';
-    cx.fillRect(0, GROUND, W, H - GROUND);
-    cx.strokeStyle = '#f5c242'; cx.lineWidth = 3; cx.setLineDash([34, 26]);
-    cx.lineDashOffset = -(dist * 10) % 60;
-    cx.beginPath(); cx.moveTo(0, GROUND + 32); cx.lineTo(W, GROUND + 32); cx.stroke();
-    cx.setLineDash([]);
-
-    // rings
-    rings.forEach(r => {
-      cx.strokeStyle = r.hit ? 'rgba(16,185,129,0.9)' : 'rgba(122,162,255,0.9)';
-      cx.lineWidth = 5;
-      cx.beginPath(); cx.ellipse(r.x, r.y, 12, r.r, 0, 0, 7); cx.stroke();
-      cx.strokeStyle = r.hit ? 'rgba(16,185,129,0.25)' : 'rgba(122,162,255,0.25)';
-      cx.beginPath(); cx.ellipse(r.x, r.y, 12, r.r + 7, 0, 0, 7); cx.stroke();
+  <main class="experience">
+    <canvas id="flight" tabindex="0" aria-label="Interactive Roadster flight. Drag to orbit; scroll to zoom. Hold Space for thrust at any time; P pauses." aria-describedby="view-hint"></canvas>
+    <header>
+      <a href="index.html" aria-label="Back to homepage">LX<span> / </span>EXPERIMENTS</a>
+      <span class="edition">FLIGHT STUDY — 01</span>
+    </header>
+    <div class="heading">
+      <p>BEYOND THE ROAD.</p>
+      <h1>ROADSTER</h1>
+    </div>
+    <div class="scene-caption"><span class="signal"></span><span id="phase" aria-live="polite">Preparing scene</span></div>
+    <section id="moon-arrival" hidden aria-live="polite"><p>BEYOND THE ROAD. BEYOND EARTH.</p><h2>MOON LANDING</h2><span>You kept going. Welcome to the Moon.</span></section>
+    <div class="telemetry" aria-hidden="true">
+      <div><span>ALTITUDE</span><strong id="altitude">0.0</strong><small>M</small></div>
+      <div><span>FLIGHT TIME</span><strong id="time">00.0</strong><small>S</small></div>
+    </div>
+    <aside class="thrust-control" aria-label="Thrust control">
+      <span class="thrust-label">FLIGHT CONTROL</span>
+      <button id="thrust" type="button" aria-pressed="false" disabled aria-describedby="thrust-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10 12 5l5 5M12 5v10M7 16v4M12 18v4M17 16v4"/></svg><strong>HOLD THRUST</strong><small>SPACE / PRESS & HOLD</small></button>
+      <span id="thrust-state">Keep holding → the Moon</span>
+    </aside>
+    <footer>
+      <div class="timeline-row">
+        <span id="playhead" aria-hidden="true">00.0 / 23.0</span>
+        <input id="timeline" type="range" min="0" max="23" step="0.01" value="0" aria-label="Flight position in seconds" disabled>
+      </div>
+      <nav class="chapters" aria-label="Jump to flight moment">
+        <button type="button" data-time="10.8" disabled>01 · Launch</button>
+        <button type="button" data-time="12" disabled>02 · Roll</button>
+        <button type="button" data-time="15.2" disabled>03 · Descent</button>
+        <button type="button" data-time="16.6" disabled>04 · Touchdown</button>
+      </nav>
+      <div class="controls">
+        <button id="pause" type="button" disabled>Pause</button>
+        <button id="view" type="button" aria-pressed="false" disabled>Free view</button>
+        <button id="replay" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1.8 7M4 4v6h6"/></svg><span>Replay flight</span></button>
+      </div>
+      <p id="view-hint">Keep holding thrust to reach the Moon · P to pause · Drag to orbit</p>
+    </footer>
+    <div class="progress"><div id="progress"></div></div>
+    <p id="error" role="alert" hidden>The 3D scene could not load. Please reload in a browser with WebGL enabled.</p>
+  </main>
+  <script type="module">
+    import('./js/roadster.js?v=12').catch(error => {
+      document.getElementById('error').hidden = false;
+      document.getElementById('phase').textContent = 'Scene unavailable';
+      console.error(error);
     });
-
-    // obstacles
-    obstacles.forEach(o => {
-      if (o.type === 'sign') {
-        cx.fillStyle = '#39404f';
-        cx.fillRect(o.x - 4, o.y, 8, GROUND - o.y);          // post
-        cx.fillStyle = '#1d4ed8';
-        roundRect(o.x - o.w / 2, o.y - o.h, o.w, o.h, 6); cx.fill();
-        cx.fillStyle = '#fff'; cx.font = '600 13px Inter';
-        cx.textAlign = 'center';
-        cx.fillText('MARS 2 →', o.x, o.y - o.h / 2 + 5);
-      } else {
-        const col = 'hsl(' + o.hue + ' 35% 42%)';
-        cx.fillStyle = col;
-        roundRect(o.x - o.w / 2, o.y - o.h, o.w, o.h * 0.75, 7); cx.fill();
-        if (o.type === 'car') {
-          cx.fillStyle = 'rgba(150,200,255,0.5)';
-          roundRect(o.x - o.w * 0.18, o.y - o.h, o.w * 0.34, o.h * 0.4, 4); cx.fill();
-        }
-        cx.fillStyle = '#15181f';
-        cx.beginPath(); cx.arc(o.x - o.w * 0.3, o.y, 8, 0, 7); cx.fill();
-        cx.beginPath(); cx.arc(o.x + o.w * 0.3, o.y, 8, 0, 7); cx.fill();
-      }
-    });
-
-    // car shadow (shrinks with altitude)
-    const alt = GROUND - car.y;
-    const sw = Math.max(18, 60 - alt * 0.12);
-    cx.fillStyle = 'rgba(0,0,0,' + Math.max(0.08, 0.4 - alt / 500) + ')';
-    cx.beginPath(); cx.ellipse(car.x, GROUND + 6, sw, 6, 0, 0, 7); cx.fill();
-
-    // particles
-    parts.forEach(p => {
-      const a = 1 - p.age / p.life;
-      if (p.col === 'flame') {
-        cx.fillStyle = 'rgba(' + (240 - 100 * a) + ',' + (180 + 60 * a) + ',255,' + (0.85 * a) + ')';
-      } else if (p.col === 'spark') {
-        cx.fillStyle = 'rgba(122,232,170,' + a + ')';
-      } else {
-        cx.fillStyle = 'rgba(160,140,110,' + (0.5 * a) + ')';
-      }
-      cx.fillRect(p.x, p.y, p.s, p.s);
-    });
-
-    if (state !== 'title') drawCar(car.x, car.y, car.tilt);
-
-    // HUD
-    if (state === 'play') {
-      cx.textAlign = 'left';
-      cx.fillStyle = rngFlash > 0 ? '#10b981' : '#e6e9ee';
-      cx.font = '600 20px Inter';
-      cx.fillText(Math.floor(dist) + ' m', 20, 34);
-      cx.fillStyle = '#9aa3b0'; cx.font = '500 12px Inter';
-      cx.fillText('BEST ' + best + ' m', 20, 52);
-      // fuel bar
-      cx.fillStyle = '#2a2f3a'; roundRect(20, 62, 120, 9, 4); cx.fill();
-      cx.fillStyle = car.fuel < 0.35 ? '#ef4444' : '#7aa2ff';
-      roundRect(20, 62, 120 * car.fuel / FUEL_MAX, 9, 4); cx.fill();
-      cx.fillStyle = '#9aa3b0'; cx.font = '500 10px Inter';
-      cx.fillText('COLD GAS', 146, 70);
-    }
-
-    // overlays
-    cx.textAlign = 'center';
-    if (state === 'title') {
-      cx.fillStyle = '#e6e9ee'; cx.font = '600 34px Inter';
-      cx.fillText('ROADSTER HOVER', W / 2, H / 2 - 40);
-      cx.fillStyle = '#9aa3b0'; cx.font = '500 15px Inter';
-      cx.fillText('The new Roadster doesn\'t need a runway.', W / 2, H / 2 - 8);
-      cx.fillStyle = '#7aa2ff'; cx.font = '600 16px Inter';
-      cx.fillText((Math.floor(t * 2) % 2 ? '' : '▶') + '  press SPACE or touch to launch', W / 2, H / 2 + 36);
-      drawCar(W / 2, GROUND, 0);
-    } else if (state === 'over') {
-      cx.fillStyle = 'rgba(11,14,20,0.72)';
-      cx.fillRect(0, 0, W, H);
-      cx.fillStyle = '#ef4444'; cx.font = '600 30px Inter';
-      cx.fillText('CRASHED', W / 2, H / 2 - 34);
-      cx.fillStyle = '#e6e9ee'; cx.font = '600 20px Inter';
-      cx.fillText(Math.floor(dist) + ' m' + (Math.floor(dist) >= best ? '  ·  NEW BEST!' : ''), W / 2, H / 2);
-      cx.fillStyle = '#9aa3b0'; cx.font = '500 14px Inter';
-      cx.fillText('press SPACE or touch to retry', W / 2, H / 2 + 34);
-    }
-  }
-
-  // ---------- loop ----------
-  function frame(now) {
-    const dt = Math.min(0.033, (now - last) / 1000 || 0);
-    last = now;
-    update(dt);
-    draw();
-    requestAnimationFrame(frame);
-  }
-  reset();
-  requestAnimationFrame(frame);
-})();
-</script>
-  <script data-goatcounter="https://lqxiao.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>
+  </script>
 </body>
 </html>
