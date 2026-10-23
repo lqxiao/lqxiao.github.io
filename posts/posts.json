@@ -1,5 +1,16 @@
 [
   {
+    "slug": "llm-value-investing",
+    "title": "Can LLMs Be Good Value Investors?",
+    "date": "2025-11-12",
+    "tags": [
+      "LLM",
+      "investing",
+      "evaluation"
+    ],
+    "excerpt": "It's easy to imagine LLMs outperforming humans in high-frequency trading: machines are faster, tireless, and consistent. Whether LLMs make good value investors, however, remains an open question."
+  },
+  {
     "slug": "llm-safety",
     "title": "From Lab to Launch: Industrial-Strength LLM Safety",
     "date": "2025-07-17",
