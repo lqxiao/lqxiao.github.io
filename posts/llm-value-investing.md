@@ -22,15 +22,13 @@ Originating with Benjamin Graham (buy below intrinsic value with a margin of saf
 
 We ran a simple test: prompt each LLM to construct a portfolio with minimal instruction—kept intentionally sparse to avoid biasing the outcome and to surface each model’s own “understanding” of value investing. We evaluated leading models (ChatGPT-5, Claude, Grok, DeepSeek, Qwen), enabling thinking mode and web search to give each its best shot, while disabling personalization/memory to avoid user-specific preferences creeping in.
 
-> 💡 
-
-System Prompt
-
-Suppose you are a value investor. Create a portfolio. Provide:
-
-1. The stock tickers.
-1. A brief value rationale for each.
-1. A target portfolio allocation (percentages) that sums to 100%.
+> 💡 **System Prompt**
+>
+> Suppose you are a value investor. Create a portfolio. Provide:
+>
+> 1. The stock tickers.
+> 2. A brief value rationale for each.
+> 3. A target portfolio allocation (percentages) that sums to 100%.
 
 ## Results
 
@@ -153,22 +151,21 @@ Furthermore, in this work we used very simple prompt to avoid introduce bias to 
 
 Please cite this work as:
 
-```plain text
-Xiao, Liqiang. "Why We Think". Lil'Log (May 2025). https://lilianweng.github.io/posts/2025-05-01-thinking/
+```text
+Xiao, Liqiang. "Can LLMs Be Good Value Investors?" (Nov 2025). https://lqxiao.github.io/post.html?p=llm-value-investing
 ```
 
-Or use the BibTex citation:
+Or use the BibTeX citation:
 
-```plain text
-@article{weng2025think,
-  title = {Why We Think},
-  author = {Weng, Lilian},
-  journal = {lilianweng.github.io},
-  year = {2025},
-  month = {May},
-  url = "https://lilianweng.github.io/posts/2025-05-01-thinking/"
+```bibtex
+@misc{xiao2025valueinvestors,
+  title        = {Can LLMs Be Good Value Investors?},
+  author       = {Xiao, Liqiang},
+  year         = {2025},
+  month        = nov,
+  howpublished = {\url{https://lqxiao.github.io/post.html?p=llm-value-investing}},
+  note         = {Blog post}
 }
-
 ```
 
 ---
